@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -24,7 +25,7 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
-    private String imageUrl;
+    private String imgUrl;
 
     @ManyToMany
     @JoinTable(name = "tb_product_category",
@@ -34,4 +35,16 @@ public class Product {
 
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Product product)) return false;
+
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }

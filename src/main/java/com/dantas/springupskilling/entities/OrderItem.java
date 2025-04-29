@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -42,5 +44,17 @@ public class OrderItem {
     }
     public void setProduct(Product product) {
         id.setProduct(product);
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof OrderItem orderItem)) return false;
+
+        return Objects.equals(id, orderItem.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

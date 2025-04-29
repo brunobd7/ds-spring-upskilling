@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -25,4 +26,16 @@ public class Payment {
     @OneToOne
     @MapsId
     private Order order;
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Payment payment)) return false;
+
+        return Objects.equals(id, payment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
