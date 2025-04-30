@@ -5,7 +5,10 @@ import com.dantas.springupskilling.dto.ProductDto;
 import com.dantas.springupskilling.entity.Product;
 import com.dantas.springupskilling.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +23,7 @@ public class ProductService {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional(readOnly = true)
     public ProductDto getProductById(Long id) {
         Optional<Product> result = repository.findById(id);
         // MODEL MAPPER DIDN'T WORK WITH JAVA RECORDS YET
@@ -27,10 +31,17 @@ public class ProductService {
 //                .map(value -> modelMapper.map(value, ProductDto.class))
 //                .orElse(null);
         return result
-                .map( product ->
-                        new ProductDto(product.getId(), product.getName(),product.getDescription(),
-                                product.getPrice(),product.getImgUrl())
+                .map(product ->
+                        new ProductDto(product.getId(), product.getName(), product.getDescription(),
+                                product.getPrice(), product.getImgUrl())
                 ).orElse(null);
     }
 
+    @Transactional(readOnly = true)
+    public Page<ProductDto> getProducts(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(product -> new ProductDto(product.getId(), product.getName(), product.getDescription(),
+                        product.getPrice(), product.getImgUrl())
+                );
+    }
 }
