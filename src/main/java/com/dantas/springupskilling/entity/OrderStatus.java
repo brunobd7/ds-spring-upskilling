@@ -1,4 +1,4 @@
-package com.dantas.springupskilling.entities;
+package com.dantas.springupskilling.entity;
 
 public enum OrderStatus {
     WAITING_PAYMENT,
