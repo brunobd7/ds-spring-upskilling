@@ -61,4 +61,9 @@ public class ProductService {
         product = repository.save(product);
         return new ProductDto(product.getId(),product.getName(),product.getDescription(),product.getPrice(),product.getImgUrl());
     }
+
+    @Transactional
+    public void deleteProduct(Long id){
+        repository.deleteById(id);
+    }
 }
