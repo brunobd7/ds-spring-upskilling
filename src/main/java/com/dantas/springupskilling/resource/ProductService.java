@@ -53,4 +53,12 @@ public class ProductService {
         product = repository.save(product);
         return new ProductDto(product.getId(),product.getName(),product.getDescription(),product.getPrice(),product.getImgUrl());
     }
+
+    @Transactional
+    public ProductDto updateProduct(Long id , ProductDto inputDto){
+        Product product = repository.getReferenceById(id); // REFERENCE DID NOT HIT THE DATABASE. PREPARE THE OBJECT AND ASSING TO JPA MONITORING SCOPE.
+        BeanUtils.copyProperties(inputDto, product,"id");
+        product = repository.save(product);
+        return new ProductDto(product.getId(),product.getName(),product.getDescription(),product.getPrice(),product.getImgUrl());
+    }
 }

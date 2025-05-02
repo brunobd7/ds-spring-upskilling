@@ -38,4 +38,9 @@ public class ProductResource {
                 .toUri();
         return ResponseEntity.created(uri).body(savedProduct);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id, @RequestBody ProductDto inputDto) {
+        return ResponseEntity.ok(service.updateProduct(id,inputDto));
+    }
 }
