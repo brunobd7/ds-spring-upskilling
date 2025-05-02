@@ -5,6 +5,7 @@ import com.dantas.springupskilling.dto.ProductDto;
 import com.dantas.springupskilling.entity.Product;
 import com.dantas.springupskilling.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,13 @@ public class ProductService {
                 .map(product -> new ProductDto(product.getId(), product.getName(), product.getDescription(),
                         product.getPrice(), product.getImgUrl())
                 );
+    }
+
+    @Transactional
+    public ProductDto saveProduct(ProductDto inputDto){
+        Product product = new Product();
+        BeanUtils.copyProperties(inputDto, product,"id");
+        product = repository.save(product);
+        return new ProductDto(product.getId(),product.getName(),product.getDescription(),product.getPrice(),product.getImgUrl());
     }
 }
