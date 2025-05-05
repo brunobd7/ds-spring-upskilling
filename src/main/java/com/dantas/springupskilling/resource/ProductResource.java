@@ -1,6 +1,7 @@
 package com.dantas.springupskilling.resource;
 
 import com.dantas.springupskilling.dto.ProductDto;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ProductResource {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto inputDto){
+    public ResponseEntity<ProductDto> saveProduct(@Valid @RequestBody ProductDto inputDto){
         ProductDto savedProduct = service.saveProduct(inputDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -40,7 +41,7 @@ public class ProductResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id, @RequestBody ProductDto inputDto) {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id, @Valid @RequestBody ProductDto inputDto) {
         return ResponseEntity.ok(service.updateProduct(id,inputDto));
     }
 
