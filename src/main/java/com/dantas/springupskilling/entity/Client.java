@@ -1,5 +1,6 @@
 package com.dantas.springupskilling.entity;
 
+import com.dantas.springupskilling.dto.ClientDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +26,12 @@ public class Client {
     private LocalDate birthDate;
     private Integer children;
 
+    public Client(ClientDTO clientDTO) {
+        this.name = clientDTO.name();
+        this.cpf = clientDTO.cpf();
+        this.income = clientDTO.income();
+        this.birthDate = clientDTO.birthDate();
+        this.children = clientDTO.children();
+    }
 
 }
