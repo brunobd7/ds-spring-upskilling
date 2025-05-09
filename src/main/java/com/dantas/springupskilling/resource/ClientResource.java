@@ -29,12 +29,12 @@ public class ClientResource {
     }
 
     @GetMapping
-    public ResponseEntity<Page<List<ClientDTO>>> findAllClients(Pageable pageable){
+    public ResponseEntity<Page<ClientDTO>> findAllClients(Pageable pageable){
         return ResponseEntity.ok(clientService.findAllClients(pageable));
     }
 
     @PostMapping
-    public ResponseEntity<ClientDTO> saveClient(@RequestBody ClientDTO clientDTO, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<ClientDTO> saveClient(@Valid @RequestBody ClientDTO clientDTO){
         ClientDTO savedClient = clientService.saveClient(clientDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
