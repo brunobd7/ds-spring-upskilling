@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ds-spring-upskilling
+
+  profiles:
+    active: test
+
+  jpa:
+    open-in-view: false

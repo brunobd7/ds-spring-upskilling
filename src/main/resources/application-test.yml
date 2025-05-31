@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: ${dbpassword}
+
+  jpa:
+    show-sql: true
+#    generate-ddl: true #DEACTIVE TO NOT GENERATE SCHEMA AND TABLES
+#    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
