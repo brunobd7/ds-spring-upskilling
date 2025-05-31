@@ -1,5 +1,6 @@
 package com.dantas.springupskilling;
 
+import com.dantas.springupskilling.dto.CustomerInfoDTO;
 import com.dantas.springupskilling.projection.CustomerInfo;
 import com.dantas.springupskilling.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,13 @@ public class DsSpringUpskillingApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         List<CustomerInfo> customers = customerRepository.searchProjection1("RS");
+        List<CustomerInfoDTO> customersDTO = customerRepository.searchProjection2("rs");
 
+        System.out.println("*********** Projection using native QUERY  *********** \n");
         customers.stream().map(CustomerInfo::getName).forEach(System.out::println);
+
+
+        System.out.println("\n\n*********** Projection using JPQL *********** \n");
+        customersDTO.forEach(System.out::println);
     }
 }
