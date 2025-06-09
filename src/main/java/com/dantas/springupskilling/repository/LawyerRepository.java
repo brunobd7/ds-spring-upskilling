@@ -11,9 +11,11 @@ import java.util.List;
 @Repository
 public interface LawyerRepository extends JpaRepository<Lawyer, Long> {
 
+    /** JPQL hasn't a native equivalent implementation of UNION clausule
+     * */
     @Query(nativeQuery = true,
     value = """
-        (select name, customers_number
+        (select name, customers_number as customers_numbers
         from lawyers
         where customers_number = (select max(customers_number)
                                   from lawyers))
