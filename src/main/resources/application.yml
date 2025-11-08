@@ -5,3 +5,11 @@ spring:
     active: test
   jpa:
     open-in-view: false
+
+security:
+  client-id: ${client-id:myclientid}
+  client-secret: ${secret:myclientsecret}
+  jwt:
+    duration: ${token-duration:86400}
+
+cors.origins: ${allowed-origins:http://localhost:4200,http://localhost:3000,http://localhost:5173,http://localhost:8080}

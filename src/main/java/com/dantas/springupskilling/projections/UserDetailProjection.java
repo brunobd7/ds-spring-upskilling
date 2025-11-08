@@ -5,7 +5,7 @@ package com.dantas.springupskilling.projections;
  */
 public interface UserDetailProjection {
 
-    String getEmail();
+    String getUsername();
     String getPassword();
     Long getRoleId();
     String getAuthority();

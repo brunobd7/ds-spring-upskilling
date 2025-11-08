@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
         }
 
         User userFounded = new User();
-        userFounded.setEmail(usersList.getFirst().getEmail());
+        userFounded.setEmail(usersList.getFirst().getUsername());
         userFounded.setPassword(usersList.getFirst().getPassword());
 
         usersList.forEach(userProjection -> userFounded.addRole(new Role(userProjection.getRoleId(),userProjection.getAuthority())));
