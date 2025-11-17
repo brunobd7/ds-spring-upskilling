@@ -1,6 +1,7 @@
 package com.dantas.springupskilling.services;
 
 import com.dantas.springupskilling.dto.ProductDTO;
+import com.dantas.springupskilling.dto.ProductMinDTO;
 import com.dantas.springupskilling.entities.Product;
 import com.dantas.springupskilling.repositories.ProductRepository;
 import com.dantas.springupskilling.services.exceptions.DatabaseException;
@@ -30,9 +31,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> result = repository.searchByName(name, pageable);
-        return result.map(x -> new ProductDTO(x));
+        return result.map(ProductMinDTO::new);
     }
 
     @Transactional
