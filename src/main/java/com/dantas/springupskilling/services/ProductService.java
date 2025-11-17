@@ -2,10 +2,12 @@ package com.dantas.springupskilling.services;
 
 import com.dantas.springupskilling.dto.ProductDTO;
 import com.dantas.springupskilling.dto.ProductMinDTO;
+import com.dantas.springupskilling.entities.Category;
 import com.dantas.springupskilling.entities.Product;
 import com.dantas.springupskilling.repositories.ProductRepository;
 import com.dantas.springupskilling.services.exceptions.DatabaseException;
 import com.dantas.springupskilling.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -13,9 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -63,7 +62,7 @@ public class ProductService {
     		throw new ResourceNotFoundException("Recurso não encontrado");
     	}
     	try {
-            repository.deleteById(id);    		
+            repository.deleteById(id);
     	}
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
@@ -75,5 +74,15 @@ public class ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+
+        entity.getCategories().clear();
+        dto.getCategories()
+                .forEach(categoryDTO -> {
+                    Category cat = new Category();
+                    cat.setId(categoryDTO.getId());
+
+                    entity.getCategories().add(cat);
+                });
+
     }
 }
