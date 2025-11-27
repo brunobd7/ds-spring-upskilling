@@ -5,6 +5,7 @@ import com.dantas.springupskilling.entities.OrderItem;
 import com.dantas.springupskilling.entities.OrderStatus;
 import com.dantas.springupskilling.entities.Payment;
 import com.dantas.springupskilling.entities.User;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class OrderDTO {
     private OrderStatus status;
     private UserMinDTO client;
     private PaymentDTO payment;
+    @NotEmpty(message = "Order must to have at least 1 item.")
     private List<OrderItemDTO> items = new ArrayList<>();
 
     public Double getTotal() {
@@ -48,7 +50,7 @@ public class OrderDTO {
 
 
     @Data
-    private static class UserMinDTO {
+    public static class UserMinDTO {
         private Long id;
         private String name;
 
@@ -59,7 +61,7 @@ public class OrderDTO {
     }
 
     @Data
-    private static class PaymentDTO {
+    public static class PaymentDTO {
         private Long id;
         private Instant moment;
 
@@ -70,7 +72,9 @@ public class OrderDTO {
     }
 
     @Data
-    private static class OrderItemDTO {
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class OrderItemDTO {
         private Long productId;
         private String name;
         private Double price;
