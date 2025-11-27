@@ -28,6 +28,10 @@ public class OrderDTO {
     private PaymentDTO payment;
     private List<OrderItemDTO> items = new ArrayList<>();
 
+    public Double getTotal() {
+        return items.stream().mapToDouble(OrderItemDTO::getSubTotal).sum();
+    }
+
     public OrderDTO (Order orderEntity){
         this.id = orderEntity.getId();
         this.moment = orderEntity.getMoment();

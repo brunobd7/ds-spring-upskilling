@@ -1,8 +1,11 @@
 package com.dantas.springupskilling.services;
 
 import com.dantas.springupskilling.dto.OrderDTO;
+import com.dantas.springupskilling.entities.Order;
 import com.dantas.springupskilling.repositories.OrderRepository;
+import com.dantas.springupskilling.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderService {
@@ -13,7 +16,9 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
+    @Transactional(readOnly = true)
     public OrderDTO findOrderById(Long orderId) {
-        return new OrderDTO( orderRepository.findOrderById(orderId));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found."));
+        return new OrderDTO(order);
     }
 }
