@@ -4,6 +4,7 @@ import com.dantas.springupskilling.dto.OrderDTO;
 import com.dantas.springupskilling.services.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +25,13 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDTO> getOrdersById(@PathVariable Long orderId){
         return ResponseEntity.ok(orderService.findOrderById(orderId));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTO orderDTO){
         OrderDTO order = orderService.createOrder(orderDTO);
