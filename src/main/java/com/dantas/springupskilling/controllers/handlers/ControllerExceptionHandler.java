@@ -3,6 +3,7 @@ package com.dantas.springupskilling.controllers.handlers;
 import com.dantas.springupskilling.dto.CustomErrorDTO;
 import com.dantas.springupskilling.dto.ValidationErrorDTO;
 import com.dantas.springupskilling.services.exceptions.DatabaseException;
+import com.dantas.springupskilling.services.exceptions.ForbidenException;
 import com.dantas.springupskilling.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,13 @@ public class ControllerExceptionHandler {
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
             err.addError(f.getField(), f.getDefaultMessage());
         }
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbidenException.class)
+    public ResponseEntity<CustomErrorDTO> database(ForbidenException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 

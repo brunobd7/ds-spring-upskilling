@@ -23,11 +23,13 @@ public class OrderService {
     private final UserService userService;
     private final ProductRepository productRepository;
     private final OrderItemRepository orderItemRepository;
+    private final AuthService authService;
 
 
     @Transactional(readOnly = true)
     public OrderDTO findOrderById(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException("Order not found."));
+        authService.selfOrAdminValidation(order.getClient().getId());
         return new OrderDTO(order);
     }
 

@@ -1,4 +1,4 @@
-package com.dantas.springupskilling;
+package com.dantas.springupskilling.controllers;
 
 import com.dantas.springupskilling.dto.OrderDTO;
 import com.dantas.springupskilling.services.OrderService;
@@ -25,13 +25,13 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDTO> getOrdersById(@PathVariable Long orderId){
         return ResponseEntity.ok(orderService.findOrderById(orderId));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_CLIENT')")
+    @PreAuthorize("hasAnyRole('ROLE_OPERATOR')")
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderDTO orderDTO){
         OrderDTO order = orderService.createOrder(orderDTO);
